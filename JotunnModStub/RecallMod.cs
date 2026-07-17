@@ -14,7 +14,7 @@ namespace RecallMod
     {
         public const string PluginGUID = "chochua.RecallMod";
         public const string PluginName = "RecallMod";
-        public const string PluginVersion = "0.0.1";
+        public const string PluginVersion = "1.0.3";
         private AssetBundle _recallBundle;
         private GameObject _recallPrefab;
         // Use this class to add your own localization to the game
@@ -28,6 +28,7 @@ namespace RecallMod
             Jotunn.Logger.LogInfo($"Embedded resources: {string.Join(", ", typeof(RecallMod).Assembly.GetManifestResourceNames())}");
             AssetBundle bundle = AssetUtils.LoadAssetBundleFromResources("recallitem");
             RecallItemContent.Register(bundle);
+            RecallHud.Init();
             // To learn more about Jotunn's features, go to
             // https://valheim-modding.github.io/Jotunn/tutorials/overview.html
         }

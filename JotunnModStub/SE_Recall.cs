@@ -21,6 +21,8 @@ namespace RecallMod
             _player = character as Player;
             _timer = 0f;
             _cancelled = false;
+            RecallHud.Show();
+            RecallHud.SetText("Recalling");
 
         }
 
@@ -29,17 +31,30 @@ namespace RecallMod
             base.UpdateStatusEffect(dt);
             if (_cancelled || _player == null) return;
             _timer += dt;
+            float progress = _timer / m_recallChannelTime;
+            Jotunn.Logger.LogInfo($"[Recall] timer={_timer:F2} channelTime={m_recallChannelTime:F2} progress={progress:F2}");
+            RecallHud.SetProgress(progress);
 
-            if(_timer >= m_recallChannelTime)
+            if (_timer >= m_recallChannelTime)
             {
+                _player.Message(MessageHud.MessageType.Center, "Recalling...");
                 TeleportToSpawn();
+                RecallHud.Hide();
                 _player.GetSEMan().RemoveStatusEffect(this);
             }
         }
+        public override void Stop()
+        {
+            base.Stop();
+            RecallHud.Hide();
+        }
+
         public override void OnDamaged(HitData hit, Character attacker)
         {
             base.OnDamaged(hit, attacker);
             _cancelled = true;
+            RecallHud.SetText("Recall Cancelled...");
+            RecallHud.Hide();
             _player.Message(MessageHud.MessageType.Center, "Recall Cancelled");
             _player.GetSEMan().RemoveStatusEffect(this);
         }
