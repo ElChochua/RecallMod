@@ -14,7 +14,7 @@ namespace RecallMod
     {
         public const string PluginGUID = "chochua.RecallMod";
         public const string PluginName = "RecallMod";
-        public const string PluginVersion = "1.1.0";
+        public const string PluginVersion = "1.1.1";
         private AssetBundle _recallBundle;
         private GameObject _recallPrefab;
         // Use this class to add your own localization to the game
